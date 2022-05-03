@@ -9,9 +9,9 @@ def parse_key(key):
     tmp = sorted(tmp, key=lambda x:x[1]) # key는 키워드 매개변수로, 함수를 인자로 받는다. (해당 함수로 처리된 데이터로 정렬한다. 이 경우 lambda의 리턴값이 문자에 해당하는 부분이므로 문자의 상대적인 순서에 따라 배치된다)
     enc_table = {}
     dec_table = {}
-    for i, r in enumerate(tmp): # 알파벳간의 상대적인 우선순위로 정렬된 tmp
-        enc_table[r[0]] = i
-        dec_table[i] = r[0]
+    for i, r in enumerate(tmp): # 알파벳간의 상대적인 우선순위로 정렬된 tmp (문자 인덱스, 문자)
+        enc_table[r[0]] = i # {문자 인덱스(읽는 순서):상대적 우선순위(암호화 순서)}
+        dec_table[i] = r[0] # {상대적 우선순위(암호화 순서):문자 인덱스(읽는 순서)}
     return enc_table, dec_table
 
 def transposition(msg, key, mode):
@@ -19,7 +19,7 @@ def transposition(msg, key, mode):
     keysize = len(key)
     ret = ''
     filler = ''
-    if msgsize%keysize != 0:
+    if msgsize%keysize != 0: # 열을 맞추기 위해 빈공간에 0을 집어넣는 과정
         filler = '0'*(keysize-msgsize%keysize)
     msg = msg.upper()
     msg += filler
@@ -32,8 +32,8 @@ def transposition(msg, key, mode):
         buf = ['']*keysize
         for i, c in enumerate(msg):
             col = i %keysize
-            index = table[col]
-            buf[index] += c
+            index = table[col] 
+            buf[index] += c # 열에 해당하는 문자열에 문자를 집어넣는다.
         for text in buf:
             ret += text
     else:
