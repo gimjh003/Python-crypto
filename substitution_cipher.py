@@ -21,8 +21,9 @@ def decrypt(msg, decbook): # msg : cryptogram
             msg = msg.replace(c, decbook[c]) # replace character
     return msg # msg : plain_text
 # showcase
-encbook, decbook = make_codebook()
-cryptogram = encrypt("hello world", encbook)
-print(cryptogram)
-plain_text = decrypt(cryptogram, decbook)
-print(plain_text)
+if __name__ == "__main__":
+    encbook, decbook = make_codebook()
+    cryptogram = encrypt("hello world", encbook)
+    print(cryptogram)
+    plain_text = decrypt(cryptogram, decbook)
+    print(plain_text)
